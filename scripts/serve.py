@@ -38,7 +38,7 @@ def main():
     p.add_argument("--threads", type=int, default=8)
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=8091)
-    p.add_argument("--gpu", default="0")
+    p.add_argument("--gpu", default="0,1,2,3")
     p.add_argument("--server", type=Path, default=ROOT / ".build/bin/winnow-server")
     a, extra = p.parse_known_args()
     if a.context < 512 or (a.decision_context and a.decision_context < 512):
@@ -83,7 +83,7 @@ def main():
         "--lazy-mode",
         "off",
         "--split-mode",
-        "none",
+        "layer",
         "--override-tensor",
         r"^(token_embd|per_layer_token_embd)\.weight$="
         + ("MTL0" if platform.system() == "Darwin" else "CUDA0"),
